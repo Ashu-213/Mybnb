@@ -1,0 +1,123 @@
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #222222 !important;
+}
+/* Footer Styles */
+footer {
+    background-color: gainsboro;
+    padding: 2rem 0 1rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.f-social-info{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.f-social-info i{
+    font-size: 2rem;
+    margin: 0 1rem;
+    color: #fe424d;
+    transition: color 0.3s ease;
+}
+
+.f-social-info i:hover{
+    color: #222222;
+    cursor: pointer;
+}
+
+.copyright {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+.f-info-links{
+    text-align: center;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color: #666;
+    margin: 0 1rem;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+    color: #fe424d;
+}
+.card{
+    border: none !important;
+    margin-bottom: 2rem !important;
+}
+.card-img-top {
+    border-radius: 0.5rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body {
+    padding: 1rem !important;
+}
+.card-text p {
+    font-weight: 500 !important;
+}
+.listing-links {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.listing-links:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.listing-links:hover .card {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+.add-btn{
+    border: none !important;
+    background-color: #fe424d !important;
+}
+.edit-btn{
+    border: none !important;
+    background-color: #fe424d !important;
+}
+.show-img{
+    width: 100% !important;
+    height: 500px !important;
+    object-fit: cover !important;
+}
+.delete-listing-btn{
+    border: none !important;
+    background-color: #dc3545 !important;
+    cursor: pointer;
+    margin-left: 93px;
+}
+.lst-details{
+    font-size: 2rem;
+    text-align: center;
+}
+/* map */
+#map{
+    width: 80vh;
+    height: 400px;
+}
