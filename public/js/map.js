@@ -17,16 +17,26 @@
 //     .addTo(map);
 
 // Maptiler map initialization
-const map = new maplibregl.Map({
-    container: 'map',
-    style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapToken}`,
-    center: listing.geometry.coordinates,
-    zoom: 9
-});
+if (typeof maplibregl !== 'undefined' && mapToken) {
+    try {
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: `https://api.maptiler.com/maps/streets-v4/style.json?key=${mapToken}`,
+            center: listing.geometry.coordinates,
+            zoom: 9
+        });
 
-// Marker
-const marker = new maplibregl.Marker({color: 'red'})
-    .setLngLat(listing.geometry.coordinates)
-    .setPopup(new maplibregl.Popup({ offset: 25 })
-    .setHTML(`<h4>${listing.location}</h4><p>Exact location will be provided after booking</p>`))
-    .addTo(map);
+        // Marker
+        const marker = new maplibregl.Marker({color: 'red'})
+            .setLngLat(listing.geometry.coordinates)
+            .setPopup(new maplibregl.Popup({ offset: 25 })
+            .setHTML(`<h4>${listing.location}</h4><p>Exact location will be provided after booking</p>`))
+            .addTo(map);
+    } catch (error) {
+        console.error('Map initialization error:', error);
+        document.getElementById('map').innerHTML = '<p class="text-danger">Map failed to load</p>';
+    }
+} else {
+    console.error('Maplibre GL or token not available');
+    document.getElementById('map').innerHTML = '<p class="text-muted">Map unavailable</p>';
+}
