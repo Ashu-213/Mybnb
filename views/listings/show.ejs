@@ -1,14 +1,4 @@
 <% layout("/layouts/boilerplate") %>
-<!-- <script>
-    const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
-    mapboxgl.accessToken = mapToken;
-    const listing = <%- JSON.stringify(listing) %>;
-</script> -->
-
-<script>
-    const mapToken = "<%= process.env.MAPTILER_KEY %>";
-    const listing = <%- JSON.stringify(listing) %>;
-</script>
 
     <div class="row">
         <div class=" offset-2 mb-3">
@@ -122,5 +112,11 @@
         </div>
     </div>
 
-
+    <script>
+        const mapToken = "<%= process.env.MAPTILER_KEY %>";
+        const listing = <%- JSON.stringify(listing) %>;
+        console.log('Map Token:', mapToken);
+        console.log('Listing:', listing);
+        console.log('Maplibre available:', typeof maplibregl !== 'undefined');
+    </script>
     <script src="/js/map.js"></script>
