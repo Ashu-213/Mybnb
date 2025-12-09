@@ -1,7 +1,12 @@
 <% layout("/layouts/boilerplate") %>
-<script>
+<!-- <script>
     const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
     mapboxgl.accessToken = mapToken;
+    const listing = <%- JSON.stringify(listing) %>;
+</script> -->
+
+<script>
+    const mapToken = "<%= process.env.MAPTILER_KEY %>";
     const listing = <%- JSON.stringify(listing) %>;
 </script>
 
