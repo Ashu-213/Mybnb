@@ -7,31 +7,27 @@
                 <%= listing.title %></b>
                     <br>
             </h3>
-            <div class="card col-6 offset-2">
+            <div class="col-6 card mb-3">
                 <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing image">
-                <div class="card-body">
-                    <p class="card-text">owned by: <i>
-                            <%= listing.owner ? listing.owner.username : 'Unknown' %>
-                        </i></p>
-                    <p>
-                        <%= listing.description %>
-                    </p>
-                    <br>
-                    <p>&dollar;<%= listing.price.toLocaleString('en-US') %> per night</p>
-                    <br>
-                    <p>
-                        <%= listing.country %>, <%= listing.location %>
-                    </p>
+                <div class="card mb-3 col-6">
+
+                    <p class="card-text"><b>owned by:</b> <i><%= listing.owner ? listing.owner.username : 'Unknown' %></i></p>
+                    <p class="text-nowrap"><b>Description:</b> <%= listing.description %></p>
+                    <p> <b>Price:</b> <span id="listing-price">&dollar;<%= listing.price.toLocaleString('en-US') %></span> per night <i class="tax-info" style="font-size: 0.9em; color: #717171; display: none;">+18% GST</i></p>
+                    <p><b>Location:</b> <%= listing.country %>, <%= listing.location %></p>
+                    
+                    <!-- GST Toggle -->
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" id="gstToggle">
+                        <label class="form-check-label" for="gstToggle">Display Total Price (incl. GST)</label>
+                    </div>
 
                 </div>
             </div>
-
-            <div class="col-10 offset-2 mt-3 mb-5">
+            <div class="col-6">
                 <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
-            </div>
-            <div class="col-1">
-                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger delete-listing-btn">Delete</button>
+                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="mt-2">
+                    <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
 
@@ -112,11 +108,9 @@
         </div>
     </div>
 
+    <script src="/js/show.js"></script>
     <script>
-        const mapToken = "<%= process.env.MAPTILER_KEY %>";
-        const listing = <%- JSON.stringify(listing) %>;
-        console.log('Map Token:', mapToken);
-        console.log('Listing:', listing);
-        console.log('Maplibre available:', typeof maplibregl !== 'undefined');
+        // Initialize the show page with data from the template
+        initShowPage("<%= process.env.MAPTILER_KEY %>", <%- JSON.stringify(listing) %>);
     </script>
     <script src="/js/map.js"></script>

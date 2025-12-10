@@ -7,10 +7,27 @@ const wrapAsync = require('../utils/wrapAsync.js');
 
 const axios = require('axios');
 
-// Index route - show all listings
+// Index route - show all listings with search functionality
 module.exports.index = wrapAsync(async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render('listings/index.ejs', { listings: allListings });
+    const { search } = req.query;
+    let allListings;
+
+    if (search) {
+        // Search for listings matching the query in title, location, country, or description
+        allListings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: 'i' } },
+                { location: { $regex: search, $options: 'i' } },
+                { country: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
+            ]
+        });
+    } else {
+        // If no search query, show all listings
+        allListings = await Listing.find({});
+    }
+
+    res.render('listings/index.ejs', { listings: allListings, searchQuery: search || '' });
 });
 
 // Render new listing form
