@@ -1,40 +1,46 @@
 <% layout("/layouts/boilerplate") %>
 
-    <div class="row">
-        <div class=" offset-2 mb-3">
-
-            <h3 <b>
-                <%= listing.title %></b>
-                    <br>
-            </h3>
-            <div class="col-6 card mb-3">
-                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing image">
-                <div class="card mb-3 col-6">
-
-                    <p class="card-text"><b>owned by:</b> <i><%= listing.owner ? listing.owner.username : 'Unknown' %></i></p>
-                    <p class="text-nowrap"><b>Description:</b> <%= listing.description %></p>
-                    <p> <b>Price:</b> <span id="listing-price">&dollar;<%= listing.price.toLocaleString('en-US') %></span> per night <i class="tax-info" style="font-size: 0.9em; color: #717171; display: none;">+18% GST</i></p>
-                    <p><b>Location:</b> <%= listing.country %>, <%= listing.location %></p>
-                    
-                    <!-- GST Toggle -->
-                    <div class="form-check form-switch mt-2">
-                        <input class="form-check-input" type="checkbox" id="gstToggle">
-                        <label class="form-check-label" for="gstToggle">Display Total Price (incl. GST)</label>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+            <h3 class="mt-4 mb-4"><b><%= listing.title %></b></h3>
+            
+            <div class="row">
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing image">
                     </div>
-
                 </div>
-            </div>
-            <div class="col-6">
-                <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
-                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="mt-2">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+                
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text"><b>Owned by:</b> <i><%= listing.owner ? listing.owner.username : 'Unknown' %></i></p>
+                            <p class="card-text"><b>Description:</b> <%= listing.description %></p>
+                            <p class="card-text"><b>Price:</b> <span id="listing-price">&dollar;<%= listing.price.toLocaleString('en-US') %></span> per night <i class="tax-info" style="font-size: 0.9em; color: #717171; display: none;">+18% GST</i></p>
+                            <p class="card-text"><b>Location:</b> <%= listing.country %>, <%= listing.location %></p>
+                            
+                            <!-- GST Toggle -->
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" type="checkbox" id="gstToggle">
+                                <label class="form-check-label" for="gstToggle">Display Total Price (incl. GST)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 d-flex flex-wrap gap-2">
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
+                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                            <button class="btn btn-danger delete-listing-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <!-- reveiws -->
-            <div>
+            <div class="mt-4">
                 <hr>
-                <h4>Write a Reveiw</h4>
+                <h4>Write a Review</h4>
 
                 <form method="POST" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
 
@@ -64,14 +70,14 @@
                         <div class="invalid-feedback">Please Submit valid review</div>
                     </div>
                     <br>
-                    <button class="btn btn-outline-dark">Submit Reveiw</button>
+                    <button class="btn btn-outline-dark">Submit Review</button>
                 </form>
 
             </div>
 
             <hr>
             <!-- reviews -->
-            <h4>Reviews</h4>
+            <h4 class="mt-4">Reviews</h4>
             <% if(listing.reviews && listing.reviews.length> 0) { %>
                 <% for(let review of listing.reviews) { %>
                     <div class="card mt-3">
@@ -91,7 +97,7 @@
                         </div>
                         <!-- to delete the review -->
                         <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                            method="POST" class="mb-3">
+                            method="POST" class="mb-3 ms-3">
                             <button class="btn-sm btn btn-danger">Delete</button>
                         </form>
                     </div>
@@ -100,13 +106,14 @@
                             <p class="text-muted">No reviews yet. Be the first to write a review!</p>
                             <% } %>
 
-
-        </div>
-        <div class="col-6 offset-2 mb-3">
-            <h4>Where you'll be</h4>
-            <div id="map"></div>
+            <!-- Map Section -->
+            <div class="mt-5 mb-5">
+                <h4>Where you'll be</h4>
+                <div id="map"></div>
+            </div>
         </div>
     </div>
+</div>
 
     <script src="/js/show.js"></script>
     <script>

@@ -1,55 +1,53 @@
 <% layout("layouts/boilerplate") %>
-    <div class="row">
-        <div class="col-8 offset-2">
-            <br><br>
-            <h3>Create a New Listing</h3>
-            <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
-                <div>
-                    <label for="title" class="form-label">Title</label>
-                    <input name="listing[title]" type="text" placeholder="enter Title" class="form-control" required>
-                    <div class="valid-feedback">Title Looks Good</div>
-                </div>
-                <br><br>
+<link rel="stylesheet" href="/CSS/forms.css">
 
-                <div>
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="listing[description]" placeholder="enter Description"
-                        class="form-control" required></textarea>
-                    <div class="invalid-feedback">Please enter short description</div>
-                </div>
-                <br><br>
-
-                <div>
-                    <label for="image" class="form-label">Upload image</label>
-                    <input name="listing[image]" type="file" class="form-control" required>
-                    <div class="form-text">Upload an image file</div>
-                </div>
-                <br><br>
-
-                <div class="row">
-                    <div class= "col-md-4">
-                        <label for="price" class="form-label">Price</label>
-                        <input name="listing[price]" type="number" placeholder="enter Price" class="form-control" required>
-                         <div class="invalid-feedback">Price should be valid</div>
+<div class="listing-form-container">
+    <div class="listing-form-wrapper">
+        <div class="listing-form-card card">
+            <div class="listing-form-body">
+                <h3 class="listing-form-title">Create a New Listing</h3>
+                <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+                    <div class="listing-form-section">
+                        <label for="title" class="form-label listing-form-label">Title</label>
+                        <input name="listing[title]" type="text" placeholder="Enter title" class="form-control listing-form-input" required>
+                        <div class="valid-feedback">Title Looks Good</div>
                     </div>
-                    <br><br>
 
-                    <div class = "col-md-8">
-                        <label for="country" class="form-label">Country</label>
-                        <input name="listing[country]" type="text" placeholder="enter Country" class="form-control" required>
-                        <div class="invalid-feedback">Country name shoud be valid</div>
+                    <div class="listing-form-section">
+                        <label for="description" class="form-label listing-form-label">Description</label>
+                        <textarea name="listing[description]" placeholder="Enter description" class="form-control listing-form-textarea" rows="4" required></textarea>
+                        <div class="invalid-feedback">Please enter short description</div>
                     </div>
-                    <br><br>
-                </div>
 
-                <div>
-                    <label for="location" class="form-label">Location</label>
-                    <input name="listing[location]" type="text" placeholder="enter Location" class="form-control" required>
-                    <div class="invalid-feedback">Location should be valid</div>
-                </div>
-                <br><br>
+                    <div class="listing-form-section">
+                        <label for="image" class="form-label listing-form-label">Upload image</label>
+                        <input name="listing[image]" type="file" class="form-control listing-form-input" required>
+                        <div class="form-text">Upload an image file</div>
+                    </div>
 
-                <button class="btn btn-dark add-btn">Add</button>
-            </form>
+                    <div class="row listing-form-section">
+                        <div class="col-md-4 mb-3">
+                            <label for="price" class="form-label listing-form-label">Price</label>
+                            <input name="listing[price]" type="number" placeholder="Enter price" class="form-control listing-form-input" required>
+                            <div class="invalid-feedback">Price should be valid</div>
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label for="country" class="form-label listing-form-label">Country</label>
+                            <input name="listing[country]" type="text" placeholder="Enter country" class="form-control listing-form-input" required>
+                            <div class="invalid-feedback">Country name should be valid</div>
+                        </div>
+                    </div>
+
+                    <div class="listing-form-section">
+                        <label for="location" class="form-label listing-form-label">Location</label>
+                        <input name="listing[location]" type="text" placeholder="Enter location" class="form-control listing-form-input" required>
+                        <div class="invalid-feedback">Location should be valid</div>
+                    </div>
+
+                    <button class="btn btn-dark listing-form-btn add-btn">Add Listing</button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
