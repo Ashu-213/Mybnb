@@ -57,22 +57,6 @@ module.exports.showListing = wrapAsync(async (req, res) => {
 // Create new listing
 module.exports.createListing = wrapAsync(async (req, res) => {
 
-    // Geocode the location to get geometry data
-    // const geoData = await geocodingClient.forwardGeocode({
-    //     query: req.body.listing.location,
-    //     limit: 1
-    // }).send();
-    // const newListing = new Listing(req.body.listing);
-    // newListing.owner = req.user._id;
-
-    //maptiler geocoding as alternative
-    const geoResponse = await axios.get(`https://api.maptiler.com/geocoding/${encodeURIComponent(req.body.listing.location)}.json`, {
-        params: {
-            key: process.env.MAPTILER_KEY,
-            limit: 1
-        }
-    });
-
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
 
@@ -81,8 +65,23 @@ module.exports.createListing = wrapAsync(async (req, res) => {
         let filename = req.file.filename;
         newListing.image = { url, filename };
     }
-    // newListing.geometry = geoData.body.features[0].geometry;
-    newListing.geometry = geoResponse.data.features[0].geometry;
+
+    // Try to geocode the location
+    try {
+        const geoResponse = await axios.get(`https://api.maptiler.com/geocoding/${encodeURIComponent(req.body.listing.location)}.json`, {
+            params: {
+                key: process.env.MAPTILER_KEY,
+                limit: 1
+            }
+        });
+
+        if (geoResponse.data.features && geoResponse.data.features.length > 0) {
+            newListing.geometry = geoResponse.data.features[0].geometry;
+        }
+    } catch (error) {
+        console.log("Geocoding failed:", error.message);
+        // Continue without geometry
+    }
 
     let savedListing = await newListing.save();
     console.log(savedListing);
@@ -116,6 +115,24 @@ module.exports.updateListing = wrapAsync(async (req, res) => {
         let filename = req.file.filename;
         listing.image = { url, filename };
         await listing.save();
+    }
+
+    // Try to update geometry if location changed
+    try {
+        const geoResponse = await axios.get(`https://api.maptiler.com/geocoding/${encodeURIComponent(req.body.listing.location)}.json`, {
+            params: {
+                key: process.env.MAPTILER_KEY,
+                limit: 1
+            }
+        });
+
+        if (geoResponse.data.features && geoResponse.data.features.length > 0) {
+            listing.geometry = geoResponse.data.features[0].geometry;
+            await listing.save();
+        }
+    } catch (error) {
+        console.log("Geocoding failed:", error.message);
+        // Continue without updating geometry
     }
 
     req.flash('success', 'Listing Updated!');

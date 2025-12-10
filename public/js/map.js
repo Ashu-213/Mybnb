@@ -19,19 +19,25 @@
 // Maptiler map initialization
 if (typeof maplibregl !== 'undefined' && mapToken) {
     try {
-        const map = new maplibregl.Map({
-            container: 'map',
-            style: `https://api.maptiler.com/maps/streets-v4/style.json?key=${mapToken}`,
-            center: listing.geometry.coordinates,
-            zoom: 9
-        });
+        // Check if listing has geometry data
+        if (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) {
+            const map = new maplibregl.Map({
+                container: 'map',
+                style: `https://api.maptiler.com/maps/streets-v4/style.json?key=${mapToken}`,
+                center: listing.geometry.coordinates,
+                zoom: 9
+            });
 
-        // Marker
-        const marker = new maplibregl.Marker({color: 'red'})
-            .setLngLat(listing.geometry.coordinates)
-            .setPopup(new maplibregl.Popup({ offset: 25 })
-            .setHTML(`<h4>${listing.location}</h4><p>Exact location will be provided after booking</p>`))
-            .addTo(map);
+            // Marker
+            const marker = new maplibregl.Marker({color: 'red'})
+                .setLngLat(listing.geometry.coordinates)
+                .setPopup(new maplibregl.Popup({ offset: 25 })
+                .setHTML(`<h4>${listing.location}</h4><p>Exact location will be provided after booking</p>`))
+                .addTo(map);
+        } else {
+            console.log('No geometry data available for this listing');
+            document.getElementById('map').innerHTML = '<p class="text-muted">Location map not available for this listing</p>';
+        }
     } catch (error) {
         console.error('Map initialization error:', error);
         document.getElementById('map').innerHTML = '<p class="text-danger">Map failed to load</p>';
