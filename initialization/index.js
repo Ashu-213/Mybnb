@@ -3,11 +3,15 @@ const initdata = require("./data.js");
 const Listing = require("../Models/listing.js");
 const { init } = require("../Models/reviews.js");
 
-const mongoURI = 'mongodb://127.0.0.1:27017/test';
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config({ path: "../.env" });
+}
+
+const dbURl = process.env.ATLAS_DB || 'mongodb://127.0.0.1:27017/test';
 
 async function main() {
     try {
-        await mongoose.connect(mongoURI);
+        await mongoose.connect(dbURl);
         console.log('Database connection successful');
     } catch (err) {
         console.error('Database connection error:', err);
